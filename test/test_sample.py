@@ -1,4 +1,5 @@
 import unittest
+import logging
 
 class TestSample(unittest.TestCase):
     def test_sample(self):

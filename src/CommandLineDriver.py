@@ -1,8 +1,9 @@
+import logging
+
 class CLI:
     log = logging.getLogger()
     def run(self):
         self.header()
-        log.debug("Running in DEBUG mode")
 
     def header(self):
         title = """   _____      __  __    ___              __      ____     __            
