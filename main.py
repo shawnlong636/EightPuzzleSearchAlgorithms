@@ -6,10 +6,13 @@ import collections
 from src import CommandLineDriver
 
 def main():
+    logging.basicConfig(stream=sys.stderr)
+
     arguments = sys.argv[1:]
     accepted_arguments = ["--test,", "-t", "--continue", "-c"]
 
     if len(arguments) == 0:
+        logging.getLogger().setLevel(logging.INFO)
         executeCLI()
 
     # Check valid arguments
@@ -19,6 +22,7 @@ def main():
                 printInvalidArgument(argument)
                 exit(1)
     
+    logging.getLogger().setLevel(logging.DEBUG)
     # Execute Tests
     if "--test" in arguments or "-t" in arguments:
         executeUnitTests()
