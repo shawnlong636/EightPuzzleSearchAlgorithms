@@ -1,7 +1,8 @@
 import logging
 from enum import IntEnum
 from sys import stdin
-from src.Algorithm import AlgorithmType
+from src import Algorithm
+from src import Heuristic
 
 # Global Function
 input = stdin.readline
@@ -26,7 +27,13 @@ class CLI:
             self.log.debug("Running Custom Puzzle")
             self.puzzle = self.getPuzzle()
         
-        algorithm = self.selectAlgorithm()
+        algorithm_selection = self.selectAlgorithm()
+        fetcher = Algorithm.Fetcher()
+        algorithm = fetcher.get(algorithm_selection)
+
+        algorithm.search()
+
+
 
 
     # Beginning of Helper Function
@@ -86,14 +93,14 @@ BY SHAWN LONG (SID: 862154223)
         self.log.debug(f"Final Puzzle: {rows}")
         return rows
 
-    def selectAlgorithm(self) -> AlgorithmType:
+    def selectAlgorithm(self) -> Algorithm.AlgorithmType:
         print("Enter your choice of algorithm")
         print("\t(1) UniformCostSearch")
         print("\t(2) A* with the Misplaced Tile Heuristic")
         print("\t(3) A* with the Euclidean Distance Heuristic")
 
         try:
-            acceptedValues = list(range(1, len(list(AlgorithmType))+1))
+            acceptedValues = list(range(1, len(list(Algorithm.AlgorithmType))+1))
             val = int(input())
             self.log.debug(f"Accepted Values: {acceptedValues}")
             if not val in acceptedValues:
@@ -113,7 +120,7 @@ BY SHAWN LONG (SID: 862154223)
                     self.log.debug(f"CAUGHT ERROR: {e}")
                     pass
         try:
-            alg = AlgorithmType(val)
+            alg = Algorithm.AlgorithmType(val)
             self.log.debug(f"Chosen Algorithm: {alg.name}")
             return alg
         except Exception as e:
