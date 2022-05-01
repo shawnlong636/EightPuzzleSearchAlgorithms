@@ -2,6 +2,7 @@ from enum import IntEnum
 from abc import ABC
 import logging
 from src import Heuristic
+from src import Problem
 
 log = logging.getLogger()
 

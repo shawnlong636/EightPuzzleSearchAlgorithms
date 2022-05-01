@@ -3,14 +3,15 @@ from enum import IntEnum
 from sys import stdin
 from src import Algorithm
 from src import Heuristic
+from src import Problem
 
 # Global Function
 input = stdin.readline
 
 class CLI:
     # CLI Attributes
-    puzzle = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     log = logging.getLogger()
+    default_puzzle = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
     puzzle_side_len = 3
 
     # THE Main CLI Function
@@ -22,16 +23,18 @@ class CLI:
         option = self.selectOption()
 
         if option == 1:
+            puzzle = self.default_puzzle
             self.log.debug("Running default puzzle")
         else:
             self.log.debug("Running Custom Puzzle")
-            self.puzzle = self.getPuzzle()
-        
-        algorithm_selection = self.selectAlgorithm()
-        fetcher = Algorithm.Fetcher()
-        algorithm = fetcher.get(algorithm_selection)
+            puzzle = self.getPuzzle()
 
-        algorithm.search()
+        algorithm_choice = self.selectAlgorithm()
+
+        fetcher = Algorithm.Fetcher()
+        algorithm = fetcher.get(algorithm_choice)
+        
+        puzzleProblem = self.createPuzzle(puzzle)
 
 
 
@@ -127,6 +130,22 @@ BY SHAWN LONG (SID: 862154223)
             log.debug(f"CAUGHT ERROR: {e}")
             log.debug(f"Undefined Behavior Occured, Exiting Application")
             exit()
+    
+    def createPuzzle(self, puzzle: [[int]]) -> Problem.PuzzleProblem:
+        initial = puzzle
+        row_len = len(puzzle[0])
+        col_len = len(puzzle)
+        
+        # Create the goal state
+        goal =[]
+        for i in range(row_len):
+            goal.append(list(range(i*col_len + 1, i*col_len + col_len + 1)))
+        
+        goal[-1][-1] = 0
+        self.log.debug(f"goal state: {goal}")
+
+        return Problem.PuzzleProblem(initial, goal)
+        
 
 if __name__ == '__main__':
     cli = CLI()
