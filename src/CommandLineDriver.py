@@ -1,14 +1,10 @@
 import logging
 from enum import IntEnum
 from sys import stdin
+from src.Algorithm import AlgorithmType
 
 # Global Function
 input = stdin.readline
-
-class AlgorithmType(IntEnum):
-    UniformCostSearch = 1
-    AStar_MisplacedTile = 2
-    AStar_EuclideanDistance = 3
 
 class CLI:
     # CLI Attributes
@@ -16,6 +12,7 @@ class CLI:
     log = logging.getLogger()
     puzzle_side_len = 3
 
+    # THE Main CLI Function
     def run(self):
         self.header()
         print("Welcome to the Eight Puzzle Solver!")
@@ -32,6 +29,7 @@ class CLI:
         algorithm = self.selectAlgorithm()
 
 
+    # Beginning of Helper Function
     def header(self):
         title = """   _____      __  __    ___              __      ____     __            
   / __(____ _/ / / /_  / _ \__ ________ / ___   / _____  / _  _____ ____
@@ -122,7 +120,6 @@ BY SHAWN LONG (SID: 862154223)
             log.debug(f"CAUGHT ERROR: {e}")
             log.debug(f"Undefined Behavior Occured, Exiting Application")
             exit()
-            
 
 if __name__ == '__main__':
     cli = CLI()
