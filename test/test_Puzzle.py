@@ -45,6 +45,8 @@ class TestSample(unittest.TestCase):
         self.assertEqual(len(generatedStates), len(expectedStates))
         for state in generatedStates:
             self.assertIn(state.getRepresentation(), expectedStates)
+    def test_UniformCostSearch(self):
+        initial_states = 
 
 if __name__ == "__main__":
     unittest.main()

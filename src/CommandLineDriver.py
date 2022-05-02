@@ -36,7 +36,7 @@ class CLI:
         
         puzzleProblem = self.createPuzzle(puzzle)
 
-
+        algorithm.search(puzzleProblem)
 
 
     # Beginning of Helper Function
@@ -144,7 +144,7 @@ BY SHAWN LONG (SID: 862154223)
         goal[-1][-1] = 0
         self.log.debug(f"goal state: {goal}")
 
-        return Problem.PuzzleProblem(initial, goal)
+        return Problem.PuzzleProblem(Problem.State(initial), Problem.State(goal))
         
 
 if __name__ == '__main__':

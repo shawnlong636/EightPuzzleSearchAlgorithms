@@ -2,6 +2,8 @@ import logging
 from abc import ABC
 import copy
 
+log = logging.getLogger()
+
 class State:
     def __init__(self, values):
         # Technically, values can be abstracted into anything
@@ -12,7 +14,27 @@ class State:
         self.values = values
 
     def getRepresentation(self):
-        return self.values
+        return tuple([value for row in self.values for value in row])
+    
+    def printValueArray(self):
+        for row in self.values:
+            for value in row:
+                if value == 0:
+                    print(f"  ",end="")
+                else:
+                    print(f"{value} ", end ="")
+            print("")
+    
+    def __eq__(self, other):
+        if isinstance(other, State):
+            return self.values == other.values
+        return NotImplemented
+    def __lt__(self, other):
+        # Arbitrary comparison needed for heappush to work properly with (int, object) types
+        # When two pairs have the same first value of the pair, it compares the second.
+        # but if two items in the queue have the same distance, it doesn't matter which
+        # is returned
+        return True
 
 class Problem(ABC):
     def __init__(self, initial: State, goal: State):
@@ -23,9 +45,12 @@ class Problem(ABC):
         pass
 
 class PuzzleProblem(Problem):
+
     def generate(self, puzzle: State) -> [State]:
-        puzzle_vals = puzzle.getRepresentation()
+        puzzle_vals = puzzle.values
+
         row_cnt = len(puzzle_vals)
+        log.debug(puzzle)
         col_cnt = len(puzzle_vals[0])
         
         states = []
