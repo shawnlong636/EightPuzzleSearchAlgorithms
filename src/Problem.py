@@ -50,7 +50,7 @@ class PuzzleProblem(Problem):
         puzzle_vals = puzzle.values
 
         row_cnt = len(puzzle_vals)
-        log.debug(puzzle)
+        # log.debug(puzzle)
         col_cnt = len(puzzle_vals[0])
         
         states = []
