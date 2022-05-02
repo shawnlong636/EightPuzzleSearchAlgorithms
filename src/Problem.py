@@ -2,7 +2,7 @@ import logging
 from abc import ABC
 import copy
 
-log = logging.getLogger()
+log = logging.getLogger(__name__)
 
 class State:
     def __init__(self, values):
@@ -24,6 +24,8 @@ class State:
                 else:
                     print(f"{value} ", end ="")
             print("")
+    def get2DArrayRepresentation(self):
+        return self.values
     
     def __eq__(self, other):
         if isinstance(other, State):
